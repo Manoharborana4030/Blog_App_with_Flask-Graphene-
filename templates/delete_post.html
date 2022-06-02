@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block title %}Delete Post{% endblock title %}
+{% block body %}
+    {% if session.user_id == post.author.id  %}
+        <h2>Delete :{{post.title}}</h2>
+        <br/>
+        <div class="form-group">
+        <form method='POST'>
+        </br>
+            <strong>Are you Sure ?!!!!</strong>
+        </br>
+        </br>
+            <button class="btn btn-secondary">Delete Post</button>
+        </div>
+    </form>
+    {% endif %}
+Opppp!! you'r not authorised user !!
+{% endblock  %}

@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{post.tag}}{% endblock title %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        {{msg}}
+        <div class="col-md-8 col-md-offset-2">
+<h2>Update Post</h2>
+<br/>
+<form method='POST' action="/update_post/{{post.id}}" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Blog Title</label>
+      <input type="text" value="{{post.title}}" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Blog Title">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Tag</label>
+      <input type="text" value="{{post.tag}}" name="tag" class="form-control" id="exampleInputPassword1" placeholder="tag">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">About Blog</label>
+        <textarea class="form-control" name="about" id="exampleFormControlTextarea1" rows="3">{{post.body}}</textarea>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlFile1">Upload Image </label>
+        <input type="file" name="fileupload" class="form-control-file" id="exampleFormControlFile1">
+      </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</div>
+</div>
+
+Uppssss Sorryyy!!!!!
+
+
+{% endblock  %}

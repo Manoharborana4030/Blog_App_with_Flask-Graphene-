@@ -1,0 +1,73 @@
+
+{% extends 'layout.html' %}
+
+{% block body %}
+
+
+<h1>{{post.title}}</h1>
+<small>By: 
+    {{post.author.firstName}}
+    {{post.author.lastName}}-
+    {{post.postDate}} - 
+        {% if session.user_id == post.author.id %}
+                <a href="/update_post/{{post.id}}">Edit |</a>
+                <a href="/delete_post/{{post.id}}">Delete</a>
+        {% endif %}
+</small><br/>
+<hr>
+<br/>
+
+{% if post.headerImage  %}
+    <img src="/static/{{post.headerImage}}" width="350" height="250"> 
+{% endif %}
+</br>
+</br>
+{{post.body}}
+<br/>
+<br/>
+<a href="/dashboard" class="btn btn-secondary">BACK</a>
+
+<br/><br/>
+<hr>
+<br/>
+
+<form action="/like_post/{{post.id}}" method="post">
+    {% for i in liked %}
+    {% if session.username == i %}
+        <button type="submit" name="post_id" value="{{post.id}}" class="btn btn-danger btn-sm">UNLIKE</button>
+    {% else %}
+        <button type="submit" name="post_id" value="{{post.id}}" class="btn btn-primary btn-sm">LIKE</button>    
+    
+    {% endif %}
+    {% endfor %}
+    {% if len_liked == 0 %}
+    <button type="submit" name="post_id" value="{{post.id}}" class="btn btn-primary btn-sm">LIKE</button>    
+    
+    {% endif %}
+    --{{total_likes}} Likes
+</form>
+</br></br>
+<h2>Comments</h2>
+<hr>
+<br/>
+{% if not post.comments %}
+    No Comments Yet..<a href="/add_comments/{{post.id}}">Add Comment</a>
+{% else %}
+    <a href="/add_comments/{{post.id}}">Add Comment</a>
+    <br/>
+    <br/>
+    
+    {% for i in post.comments  %}
+        <strong>    
+            {{i.name}}-
+        </strong>
+        <br/>
+        {{i.body}}
+        <br/><br/>
+        
+    {% endfor %}
+{% endif %}
+    
+<hr>
+
+{% endblock  %}
