@@ -341,23 +341,10 @@ def like_post(id):
 @app.route('/add_comments/<int:id>',methods=['GET','POST'])
 def add_comments(id):
     if 'username' in session:
-        data='''
-        query{
-            post(postId:%s)
-            {
-                     id
-                  title
-                  author{
-                      id
-                  }        
-            }
-            }'''% (id)
-        headers = {'Authorization': f"JWT {session['token']}"}
-        data_res=requests.get(url=url,json={"query":data},headers=headers)
-        post=data_res.json()['data']['post']
         if request.method=='POST':
-            name=request.form['name']
+            name=session['username']
             body=request.form['body']
+            print(name,"@@@@@")
             query='''mutation{
                         createComments(commentsData:
                         {
@@ -370,12 +357,12 @@ def add_comments(id):
                             
                         }
                         }'''% (id,name,body)
+            headers = {'Authorization': f"JWT {session['token']}"}
             response=requests.post(url=url,json={"query":query},headers=headers)
             print(response.json())
             return redirect(url_for('dashboard'))
-        return render_template("add_comments.html",post=post)
     else:
         return redirect(url_for('login'))
 
-if __name__=="__main__":
-    app.run(port = 5000,debug = True)
+if __name__ == "__main__":
+    app.run(debug=True)

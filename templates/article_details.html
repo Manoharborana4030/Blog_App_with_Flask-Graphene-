@@ -51,9 +51,28 @@
 <hr>
 <br/>
 {% if not post.comments %}
-    No Comments Yet..<a href="/add_comments/{{post.id}}">Add Comment</a>
+    No Comments Yet..<button class="collapsible">Add Comment</button>
+    <div class="content">
+        <form action="/add_comments/{{post.id}}" method="POST">
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Comment</label>
+                <textarea class="form-control" name="body" id="exampleFormControlTextarea1" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+      </div>
 {% else %}
-    <a href="/add_comments/{{post.id}}">Add Comment</a>
+<button class="collapsible ">Add Comment</button>
+<div class="content">
+    <form action="/add_comments/{{post.id}}" method="POST">
+          <div class="form-group">
+              <label for="exampleFormControlTextarea1">Comment</label>
+              <textarea class="form-control" name="body" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+   
+  </div>
     <br/>
     <br/>
     
@@ -67,7 +86,57 @@
         
     {% endfor %}
 {% endif %}
-    
+
+<style>
+    .collapsible {
+        color: black;
+        cursor: pointer;
+        padding: 18px;
+        width: 10%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+      }
+      
+      
+      .collapsible:after {
+        content: '+';
+        color: black;
+        float: right;
+        margin-left: 5px;
+      }
+      
+      
+      
+      .active:after {
+        content: "-";
+      }
+      .content {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0s ease-out;
+        text-align: left;
+        font-size: 16px;
+        line-height: 20px;
+        margin-bottom: 15px;
+      }
+</style>
+<script>
+    var coll = document.getElementsByClassName("collapsible");    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+      
+          if (content.style.maxHeight){
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+          } 
+        });
+      }
+</script>
 <hr>
 
 {% endblock  %}
